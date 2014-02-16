@@ -86,6 +86,7 @@ static void failsafe_radio_on_event()
     }
 
     // log the error to the dataflash
+	gcs_send_text_P(SEVERITY_LOW,PSTR("RADIO FAILSAFE!"));
     Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_RADIO, ERROR_CODE_FAILSAFE_OCCURRED);
 
 }
@@ -203,6 +204,7 @@ static void failsafe_gps_check()
     // update state, warn the ground station and log to dataflash
     set_failsafe_gps(true);
     gcs_send_text_P(SEVERITY_LOW,PSTR("Lost GPS!"));
+    //digitalWrite(B_LED_PIN,LED_ON);
     Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_GPS, ERROR_CODE_FAILSAFE_OCCURRED);
 
     // take action based on flight mode and FS_GPS_ENABLED parameter
@@ -253,6 +255,7 @@ static void failsafe_gcs_check()
     // GCS failsafe event has occured
     // update state, log to dataflash
     set_failsafe_gcs(true);
+	gcs_send_text_P(SEVERITY_LOW,PSTR("GCS FAILSAFE"));
     Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_GCS, ERROR_CODE_FAILSAFE_OCCURRED);
 
     // This is how to handle a failsafe.
